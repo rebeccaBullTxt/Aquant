@@ -6,7 +6,7 @@ import pandas as pd
 
 from csmquant.core.get_symbol_list import get_symbol_list_from_eastmoney
 from csmquant.core.get_web_json_data import get_web_content
-from settings import DATA_DIR, DC_BONUS_COLUMNS
+from settings import DATA_DIR, EASTMONEY_BONUS_COLUMNS
 
 pd.set_option('display.max_rows', 100)
 pd.set_option('display.max_columns', 100)
@@ -20,10 +20,10 @@ def get_bonus(symbol):
     df = pd.DataFrame(data=data)
 
     # 列名重命名
-    columns_list = list(DC_BONUS_COLUMNS.keys())
+    columns_list = list(EASTMONEY_BONUS_COLUMNS.keys())
     df = df[columns_list]
     df = df.copy()  # 我在抽取了原来DataFrame数据的几列后，对抽取后的数据进行赋值操作时弹出这个警告。这个是深浅拷贝的警告,我对其进行一次深拷贝即可解决，这种方式可能会失效。
-    df.rename(columns=DC_BONUS_COLUMNS, inplace=True)
+    df.rename(columns=EASTMONEY_BONUS_COLUMNS, inplace=True)
 
     # 日期数据处理
     df['预案公告日'] = pd.to_datetime(df['预案公告日']).dt.date
